@@ -1,0 +1,10 @@
+#map {
+    width: 100%;
+    height: 800px;
+}
+
+.marker {
+    background: #837569;
+    padding: 5px;
+    border-radius: 25px;
+}

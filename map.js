@@ -52,8 +52,8 @@ function createMarker(data, owner) {
 }
 
 function createIcon(elem, owner, isV) {
-    var v = isV ? '_v' : '';
-    var icon = '<img src="' + elem.icon + v + '" width="' + elem.width + '" height="' + elem.height + '">';
+    var i = isV ? elem.icon_v : elem.icon;
+    var icon = '<img src="' + i + '" width="' + elem.width + '" height="' + elem.height + '">';
     var blason = '';
     if (owner != null && owner != '') {
         blason = '<img src="blasons/' + owner + '.png" class="blason">';

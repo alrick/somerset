@@ -10,7 +10,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "babel-build": "babel src --out-file index.js"
+    "babel-build": "babel src/data.js src/pin.js src/fief.js src/defense.js src/factory.js src/map.js --out-file index.js"
   },
   "repository": {
     "type": "git",

@@ -57,7 +57,7 @@ var setupMap = function() {
 }
 
 // entry point
-$('#map').data('style', 'classic');
+$('#map').data('style', 'sketchy');
 localforage.getItem('somersetstyle', function(err, value) {
   if (value != '') {
     $('#map').data('style', value);

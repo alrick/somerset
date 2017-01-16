@@ -52,7 +52,7 @@ class Pin {
   }
 
   _hasOwner() {
-    return this.hasOwnProperty('owner') && this.owner != 'others';
+    return this.hasOwnProperty('owner') && this.owner != undefined;
   }
 
   _isVassal() {

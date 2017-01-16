@@ -1,82 +1,67 @@
 // vars
-let layers = {
-  'classic6': L.layerGroup(),
-  'classic7': L.layerGroup(),
-  'sketchy6': L.layerGroup(),
-  'sketchy7': L.layerGroup()
-};
+let map;
+let classic6 = L.layerGroup();
+let classic7 = L.layerGroup();
+let sketchy6 = L.layerGroup();
+let sketchy7 = L.layerGroup();
 let api = 'https://private-1e008-somerset.apiary-mock.com/';
-let owners = ['others', 'aeron', 'deoord', 'lothar', 'odo', 'tulkas', 'valens'];
 
 // init map
+$('#map').data('style', 'sketchy');
 $("#map").height(window.innerHeight - 20);
-let map = L.map('map', {
+map = L.map('map', {
   minZoom: 6,
   maxZoom: 7
 }).setView([18.15629, 34.67285], 6);
+L.imageOverlay('somerset.png', [[0, 0], [42.28, 55.00]]).addTo(map);
 
-// setup
-var setupMap = function() {
-  L.imageOverlay('somerset.png', [[0, 0], [42.28, 55.00]]).addTo(map);
+// button to switch styles
+L.easyButton('fa-map-signs', function(btn, map) {
+  switchStyle();
+  cleanLayers(map);
+  setLayer(map);
+}).addTo(map);
 
-  // map events
-  map.on('contextmenu', function (ev) {
-    window.prompt("Copy to clipboard: Ctrl+C, Enter", ev.latlng.lat.toFixed(3) + ',' + ev.latlng.lng.toFixed(3))
-  });
-  map.on('zoomstart', function() {
-    cleanLayers();
-  });
-  map.on('zoomend', function() {
-    setLayer();
-  });
-
-  // get data from api
-  for (let owner of owners) {
-    $.getJSON( api + owner, function( data ) {
-      for (let object of data) {
-        let pin7Classic = buildPin(object.type, object.name, object.description, object.latlng, 1, 'classic', owner, object.v || false);
-        let pin6Classic = buildPin(object.type, object.name, object.description, object.latlng, 0.65, 'classic', owner, object.v || false);
-        let pin7Sketchy = buildPin(object.type, object.name, object.description, object.latlng, 1, 'sketchy', owner, object.v || false);
-        let pin6Sketchy = buildPin(object.type, object.name, object.description, object.latlng, 0.65, 'sketchy', owner, object.v || false);
-        layers['classic7'].addLayer(pin7Classic.getMarker());
-        layers['classic6'].addLayer(pin6Classic.getMarker());
-        layers['sketchy7'].addLayer(pin7Sketchy.getMarker());
-        layers['sketchy6'].addLayer(pin6Sketchy.getMarker());
-      }
-    });
-  }
-  cleanLayers();
-  setLayer();
-
-  // button to switch styles
-  L.easyButton('fa-map-signs', function(btn, map) {
-    switchStyle();
-    cleanLayers();
-    setLayer();
-  }).addTo(map);
-}
-
-// entry point
-$('#map').data('style', 'sketchy');
-localforage.getItem('somersetstyle', function(err, value) {
-  if (value != '') {
-    $('#map').data('style', value);
-  }
-  setupMap();
+// map events
+map.on('contextmenu', function (ev) {
+  window.prompt("Copy to clipboard: Ctrl+C, Enter", ev.latlng.lat.toFixed(3) + ',' + ev.latlng.lng.toFixed(3))
+});
+map.on('zoomstart', function() {
+  cleanLayers(map);
+});
+map.on('zoomend', function() {
+  setLayer(map);
 });
 
-function cleanLayers() {
-  for (var layer in layers) {
-    if (layers.hasOwnProperty(layer)) {
-        map.removeLayer(layers[layer]);
-    }
+$.getJSON(api, function(data) {
+  for (let object of data) {
+    let pin7Classic = buildPin(object.type, object.name, object.description, object.latlng, 1, 'classic', object.owner, object.v || false);
+    let pin6Classic = buildPin(object.type, object.name, object.description, object.latlng, 0.65, 'classic', object.owner, object.v || false);
+    let pin7Sketchy = buildPin(object.type, object.name, object.description, object.latlng, 1, 'sketchy', object.owner, object.v || false);
+    let pin6Sketchy = buildPin(object.type, object.name, object.description, object.latlng, 0.65, 'sketchy', object.owner, object.v || false);
+    classic7.addLayer(pin7Classic.getMarker());
+    classic6.addLayer(pin6Classic.getMarker());
+    sketchy7.addLayer(pin7Sketchy.getMarker());
+    sketchy6.addLayer(pin6Sketchy.getMarker());
   }
+  let somersetstyle = localStorage.getItem('somersetstyle');
+  if (somersetstyle != undefined && somersetstyle != '') {
+    $('#map').data('style', somersetstyle);
+  }
+  setLayer(map);
+});
+
+function cleanLayers(map) {
+  map.removeLayer(classic6);
+  map.removeLayer(classic7);
+  map.removeLayer(sketchy6);
+  map.removeLayer(sketchy7);
 }
 
-function setLayer() {
+function setLayer(map) {
   let zoom = map.getZoom();
   let style = getStyle();
-  map.addLayer(layers[style + zoom]);
+  map.addLayer(window[style + zoom]);
 }
 
 function getStyle() {
@@ -88,13 +73,5 @@ function switchStyle() {
   let sketchyStyle = 'sketchy';
   let style = getStyle() === stdStyle ? sketchyStyle : stdStyle;
   $('#map').data('style', style);
-  setStorage('somersetstyle', style);
-}
-
-function setStorage(key, value) {
-  localforage.setItem(key, value).then(function (value) {
-    // ok
-  }).catch(function(err) {
-    console.log(err);
-  });
+  localStorage.setItem('somersetstyle', style);
 }

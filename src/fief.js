@@ -2,8 +2,8 @@
 // Pin
 
 class Fief extends Pin {
-  constructor(name, description, latlng, ratio, pop, owner, isVassal) {
-    super(name, description, latlng, ratio);
+  constructor(name, description, latlng, ratio, style, pop, owner, isVassal) {
+    super(name, description, latlng, ratio, style);
     this.pop = pop;
     this.owner = owner;
     this.isVassal = isVassal;
@@ -22,42 +22,39 @@ class Fief extends Pin {
 // Fief
 
 class VillageFief extends Fief {
-  constructor(name, description, latlng, ratio, pop, owner, isVassal) {
-    super(name, description, latlng, ratio, pop, owner, isVassal);
-    if (isVassal) {
-      this.icon = 'icons/village_v.png';
-    } else {
-      this.icon = 'icons/village.png';
-    }
-    this.width = 40;
-    this.height = 49;
+  constructor(name, description, latlng, ratio, style, pop, owner, isVassal) {
+    super(name, description, latlng, ratio, style, pop, owner, isVassal);
+    this.icon = 'icons/village.png';
+    this.width = 90;
+    this.height = 39;
+    this.iconSketchy = 'icons/sketchy/village.png';
+    this.widthSketchy = 47;
+    this.heightSketchy = 55;
     this.chevaliers = 0;
   }
 }
 
 class BourgFief extends Fief {
-  constructor(name, description, latlng, ratio, pop, owner, isVassal) {
-    super(name, description, latlng, ratio, pop, owner, isVassal);
-    if (isVassal) {
-      this.icon = 'icons/bourg_v.png';
-    } else {
-      this.icon = 'icons/bourg.png';
-    }
-    this.width = 65;
-    this.height = 54;
+  constructor(name, description, latlng, ratio, style, pop, owner, isVassal) {
+    super(name, description, latlng, ratio, style, pop, owner, isVassal);
+    this.icon = 'icons/bourg.png';
+    this.width = 90;
+    this.height = 41;
+    this.iconSketchy = 'icons/sketchy/bourg.png';
+    this.widthSketchy = 87;
+    this.heightSketchy = 60;
   }
 }
 
 class VilleFief extends Fief {
-  constructor(name, description, latlng, ratio, pop, owner, isVassal) {
-    super(name, description, latlng, ratio, pop, owner, isVassal);
-    if (isVassal) {
-      this.icon = 'icons/ville_v.png';
-    } else {
-      this.icon = 'icons/ville.png';
-    }
-    this.width = 70;
-    this.height = 71;
+  constructor(name, description, latlng, ratio, style, pop, owner, isVassal) {
+    super(name, description, latlng, ratio, style, pop, owner, isVassal);
+    this.icon = 'icons/ville.png';
+    this.width = 110;
+    this.height = 55;
+    this.iconSketchy = 'icons/sketchy/ville.png';
+    this.widthSketchy = 149;
+    this.heightSketchy = 70;
   }
 }
 
@@ -65,8 +62,8 @@ class VilleFief extends Fief {
 // VillageFief
 
 class Hameau extends VillageFief {
-  constructor(name, description, latlng, ratio, pop, owner, isVassal) {
-    super(name, description, latlng, ratio, pop, owner, isVassal);
+  constructor(name, description, latlng, ratio, style, pop, owner, isVassal) {
+    super(name, description, latlng, ratio, style, pop, owner, isVassal);
     this.soldats = 0;
     this.garnison = 2;
   }
@@ -77,8 +74,8 @@ class Hameau extends VillageFief {
 }
 
 class PetitVillage extends VillageFief {
-  constructor(name, description, latlng, ratio, pop, owner, isVassal) {
-    super(name, description, latlng, ratio, pop, owner, isVassal);
+  constructor(name, description, latlng, ratio, style, pop, owner, isVassal) {
+    super(name, description, latlng, ratio, style, pop, owner, isVassal);
     this.soldats = 2;
     this.garnison = 5;
   }
@@ -89,8 +86,8 @@ class PetitVillage extends VillageFief {
 }
 
 class Village extends VillageFief {
-  constructor(name, description, latlng, ratio, pop, owner, isVassal) {
-    super(name, description, latlng, ratio, pop, owner, isVassal);
+  constructor(name, description, latlng, ratio, style, pop, owner, isVassal) {
+    super(name, description, latlng, ratio, style, pop, owner, isVassal);
     this.soldats = 3;
     this.garnison = 5;
   }
@@ -101,8 +98,8 @@ class Village extends VillageFief {
 }
 
 class PetiteBourgade extends VillageFief {
-  constructor(name, description, latlng, ratio, pop, owner, isVassal) {
-    super(name, description, latlng, ratio, pop, owner, isVassal);
+  constructor(name, description, latlng, ratio, style, pop, owner, isVassal) {
+    super(name, description, latlng, ratio, style, pop, owner, isVassal);
     this.soldats = 5;
     this.garnison = 10;
   }
@@ -113,8 +110,8 @@ class PetiteBourgade extends VillageFief {
 }
 
 class Bourgade extends VillageFief {
-  constructor(name, description, latlng, ratio, pop, owner, isVassal) {
-    super(name, description, latlng, ratio, pop, owner, isVassal);
+  constructor(name, description, latlng, ratio, style, pop, owner, isVassal) {
+    super(name, description, latlng, ratio, style, pop, owner, isVassal);
     this.soldats = 5;
     this.garnison = 10;
     this.chevaliers = 1;
@@ -129,8 +126,8 @@ class Bourgade extends VillageFief {
 // BourgFief
 
 class PetitBourg extends BourgFief {
-  constructor(name, description, latlng, ratio, pop, owner, isVassal) {
-    super(name, description, latlng, ratio, pop, owner, isVassal);
+  constructor(name, description, latlng, ratio, style, pop, owner, isVassal) {
+    super(name, description, latlng, ratio, style, pop, owner, isVassal);
     this.soldats = 15;
     this.garnison = 20;
     this.chevaliers = 2;
@@ -142,8 +139,8 @@ class PetitBourg extends BourgFief {
 }
 
 class Bourg extends BourgFief {
-  constructor(name, description, latlng, ratio, pop, owner, isVassal) {
-    super(name, description, latlng, ratio, pop, owner, isVassal);
+  constructor(name, description, latlng, ratio, style, pop, owner, isVassal) {
+    super(name, description, latlng, ratio, style, pop, owner, isVassal);
     this.soldats = 25;
     this.garnison = 40;
     this.chevaliers = 4;
@@ -155,8 +152,8 @@ class Bourg extends BourgFief {
 }
 
 class GrandBourg extends BourgFief {
-  constructor(name, description, latlng, ratio, pop, owner, isVassal) {
-    super(name, description, latlng, ratio, pop, owner, isVassal);
+  constructor(name, description, latlng, ratio, style, pop, owner, isVassal) {
+    super(name, description, latlng, ratio, style, pop, owner, isVassal);
     this.soldats = 35;
     this.garnison = 80;
     this.chevaliers = 6;
@@ -171,8 +168,8 @@ class GrandBourg extends BourgFief {
 // VilleFief
 
 class Ville extends VilleFief {
-  constructor(name, description, latlng, ratio, pop, owner, isVassal) {
-    super(name, description, latlng, ratio, pop, owner, isVassal);
+  constructor(name, description, latlng, ratio, style, pop, owner, isVassal) {
+    super(name, description, latlng, ratio, style, pop, owner, isVassal);
     this.soldats = 50;
     this.garnison = 120;
     this.chevaliers = 9;
@@ -184,8 +181,8 @@ class Ville extends VilleFief {
 }
 
 class GrandeVille extends VilleFief {
-  constructor(name, description, latlng, ratio, pop, owner, isVassal) {
-    super(name, description, latlng, ratio, pop, owner, isVassal);
+  constructor(name, description, latlng, ratio, style, pop, owner, isVassal) {
+    super(name, description, latlng, ratio, style, pop, owner, isVassal);
     this.soldats = 65;
     this.garnison = 160;
     this.chevaliers = 12;

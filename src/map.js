@@ -4,6 +4,7 @@ let zoom6 = L.layerGroup()
 let zoom7 = L.layerGroup()
 let ratio7 = 1
 let ratio6 = 0.65
+let allowedContentType = ['building', 'defense', 'fief']
 
 // init map
 $("#map").height(window.innerHeight - 20)
@@ -37,7 +38,7 @@ CC.getEntries()
 .then(function (entries) {
   // log the title for all the entries that have it
   entries.items.forEach(function (entry) {
-    if (entry.sys.contentType.sys.id !== 'knight') {
+    if (allowedContentType.indexOf(entry.sys.contentType.sys.id) > -1) {
       let data = entry.fields
       let pin7 = buildPin(data, ratio7)
       let pin6 = buildPin(data, ratio6)

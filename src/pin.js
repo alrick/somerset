@@ -39,7 +39,7 @@ class Pin {
 
   _getHtml(icon, width, height) {
     let i = '<img src="' + icon + '" width="' + width * this.ratio + '" height="' + height * this.ratio + '">';
-    let blason = this._hasOwner() ? '<img src="blasons/' + this.owner + '.png" width="' + 30 * this.ratio + '" style="position:absolute;top:2px;right:' + -21 * this.ratio + 'px;">' : '';
+    let blason = this._hasOwner() ? '<img src="blasons/' + this.owner.toLowerCase() + '.png" width="' + 30 * this.ratio + '" style="position:absolute;top:2px;right:' + -21 * this.ratio + 'px;">' : '';
     let vassal = this._isVassal() ? '<img src="blasons/vassal.png" width="' + 19 * this.ratio + '" style="position:absolute;top:6px;right:' + -40 * this.ratio + 'px;">' : '';
     return i + blason + vassal;
   }

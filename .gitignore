@@ -46,4 +46,8 @@ jspm_packages
 # Yarn Integrity file
 .yarn-integrity
 
+# Forge hosting
 Archive.zip
+
+# Secret
+src/contentful.js

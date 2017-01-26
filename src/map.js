@@ -11,7 +11,12 @@ map = L.map('map', {
   minZoom: 6,
   maxZoom: 7
 }).setView([18.15629, 34.67285], 6)
-L.imageOverlay('somerset.png', [[0, 0], [42.28, 55.00]]).addTo(map)
+
+// set background
+CC.getAsset('5IedQC7r2geCO2UOAoug2A')
+.then(function (asset) {
+  L.imageOverlay('https:' + asset.fields.file.url, [[0, 0], [42.28, 55.00]]).addTo(map)
+})
 
 // map events
 map.on('contextmenu', function (ev) {

@@ -21,6 +21,10 @@ class Pin {
     return marker;
   }
 
+  _getType() {
+    return ''
+  }
+
   _buildIcon() {
     let width = this.width;
     let height = this.height;
@@ -41,7 +45,7 @@ class Pin {
   }
 
   _hasOwner() {
-    return this.hasOwnProperty('owner') && this.owner != undefined;
+    return this.hasOwnProperty('owner') && this.owner != undefined && this.owner != '';
   }
 
   _isVassal() {

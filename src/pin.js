@@ -1,16 +1,12 @@
 class Pin {
-  constructor(name, description, latlng, ratio, style) {
+  constructor(name, description, latlng, ratio) {
     this.name = name;
     this.description = description;
     this.latlng = latlng;
     this.ratio = ratio;
-    this.style = style;
     this.width = 55;
     this.height = 55;
     this.icon = 'icons/ghost.png';
-    this.widthSketchy = 55;
-    this.heightSketchy = 55;
-    this.iconSketchy = 'icons/ghost.png';
   }
 
   toString() {
@@ -26,17 +22,10 @@ class Pin {
   }
 
   _buildIcon() {
-    let style = 'classic';
     let width = this.width;
     let height = this.height;
-    let icon = this.icon;
-    if (this.style == 'sketchy') {
-      width = this.widthSketchy;
-      height = this.heightSketchy;
-      icon = this.iconSketchy;
-    }
     return L.divIcon({
-      html: this._getHtml(icon, width, height),
+      html: this._getHtml(this.icon, width, height),
       iconSize: [width * this.ratio, height * this.ratio],
       iconAnchor: [(width * this.ratio) / 2, height * this.ratio],
       popupAnchor: [0, -(height * this.ratio)],
@@ -64,14 +53,11 @@ class Pin {
 // Pin
 
 class Chateau extends Pin {
-  constructor(name, description, latlng, ratio, style) {
-    super(name, description, latlng, ratio, style);
-    this.width = 100;
-    this.height = 63;
-    this.widthSketchy = 80;
-    this.heightSketchy = 98;
+  constructor(name, description, latlng, ratio) {
+    super(name, description, latlng, ratio);
+    this.width = 80;
+    this.height = 98;
     this.icon = 'icons/chateau.png';
-    this.iconSketchy = 'icons/sketchy/chateau.png';
   }
 
   _getType() {
@@ -80,14 +66,11 @@ class Chateau extends Pin {
 }
 
 class Magic extends Pin {
-  constructor(name, description, latlng, ratio, style) {
-    super(name, description, latlng, ratio, style);
-    this.width = 40;
-    this.height = 53;
-    this.widthSketchy = 47;
-    this.heightSketchy = 64;
-    this.icon = 'icons/compotier.png';
-    this.iconSketchy = 'icons/sketchy/magic.png';
+  constructor(name, description, latlng, ratio) {
+    super(name, description, latlng, ratio);
+    this.width = 47;
+    this.height = 64;
+    this.icon = 'icons/magic.png';
   }
 
   _getType() {
@@ -96,14 +79,11 @@ class Magic extends Pin {
 }
 
 class Abbaye extends Pin {
-  constructor(name, description, latlng, ratio, style) {
-    super(name, description, latlng, ratio, style);
-    this.width = 50;
-    this.height = 48;
-    this.widthSketchy = 73;
-    this.heightSketchy = 70;
+  constructor(name, description, latlng, ratio) {
+    super(name, description, latlng, ratio);
+    this.width = 73;
+    this.height = 70;
     this.icon = 'icons/abbaye.png';
-    this.iconSketchy = 'icons/sketchy/abbaye.png';
   }
 
   _getType() {

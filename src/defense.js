@@ -2,8 +2,8 @@
 // Pin
 
 class Defense extends Pin {
-  constructor(name, description, latlng, ratio, style, owner) {
-    super(name, description, latlng, ratio, style);
+  constructor(name, description, latlng, ratio, owner) {
+    super(name, description, latlng, ratio);
     this.owner = owner;
   }
 }
@@ -12,14 +12,11 @@ class Defense extends Pin {
 // Defense
 
 class TourBois extends Defense {
-  constructor(name, description, latlng, ratio, style, owner) {
-    super(name, description, latlng, ratio, style, owner);
-    this.width = 36;
-    this.height = 57;
+  constructor(name, description, latlng, ratio, owner) {
+    super(name, description, latlng, ratio, owner);
+    this.width = 30;
+    this.height = 89;
     this.icon = 'icons/tourBois.png';
-    this.widthSketchy = 30;
-    this.heightSketchy = 89;
-    this.iconSketchy = 'icons/sketchy/tourBois.png';
   }
 
   _getType() {
@@ -28,14 +25,11 @@ class TourBois extends Defense {
 }
 
 class TourPierre extends Defense {
-  constructor(name, description, latlng, ratio, style, owner) {
-    super(name, description, latlng, ratio, style, owner);
+  constructor(name, description, latlng, ratio, owner) {
+    super(name, description, latlng, ratio, owner);
     this.width = 30;
-    this.height = 57;
+    this.height = 90;
     this.icon = 'icons/tourPierre.png';
-    this.widthSketchy = 30;
-    this.heightSketchy = 90;
-    this.iconSketchy = 'icons/sketchy/tourPierre.png';
   }
 
   _getType() {

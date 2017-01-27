@@ -52,3 +52,6 @@ Archive.zip
 # Prod
 index.js
 src/figaro.js
+
+# IDE
+.vscode

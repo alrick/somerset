@@ -36,6 +36,7 @@ class AbstractFief extends AbstractPin {
     this.soldats = fiefType.soldats
     this.garnison = fiefType.garnison
     this.chevaliers = fiefType.chevaliers
+    this.vassal = data.vassal
   }
 
   _getBuildingType (data) {

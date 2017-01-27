@@ -49,5 +49,5 @@ jspm_packages
 # Forge hosting
 Archive.zip
 
-# Secret
-src/contentful.js
+# Prod
+index.js

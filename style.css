@@ -7,14 +7,27 @@ body {
   height: 15px;
 }
 
-.calligraffitti {
-  font-family: 'Calligraffitti', cursive;
-  font-size: 15px;
-}
-
 .tooltip {
   text-align: center;
+  font-family: 'Calligraffitti', cursive;
+  width: 250px;
 }
-.tooltip .title {
+.tooltip p {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+.tooltip .name {
   font-size: 20px;
+}
+.tooltip .type {
+  font-size: 15px;
+}
+.tooltip .description {
+  font-size: 15px;
+  white-space: normal;
+}
+.tooltip table {
+  font-size: 13px;
+  margin: 0 auto;
 }

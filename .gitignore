@@ -51,4 +51,4 @@ Archive.zip
 
 # Prod
 index.js
-src/contentful.js
+src/figaro.js

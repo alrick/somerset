@@ -11,7 +11,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "babel-build": "babel src/figaro.js src/contentful.js src/entities.js src/map.js --out-file index.js"
+    "babel-build": "babel src/figaro.js src/entities.js src/contentful.js src/map.js --out-file index.js"
   },
   "repository": {
     "type": "git",

@@ -4,9 +4,6 @@ let zoom6 = L.layerGroup()
 let zoom7 = L.layerGroup()
 let ratio7 = 1
 let ratio6 = 0.65
-let allowedContentType = ['building', 'fief']
-let mapAssetId = '5IedQC7r2geCO2UOAoug2A'
-let vassalAssetId = '75jLoeJo9UOKW84oYUs6kC'
 
 // init map
 $("#map").height(window.innerHeight - 20)
@@ -36,52 +33,24 @@ map.on('zoomend', function () {
   map.addLayer(window['zoom' + zoom])
 })
 
-// get assets and draw pins
-CC.getAsset(vassalAssetId)
-.then(function (asset) {
-  drawPins('https:' + asset.fields.file.url)
-})
-
-function drawPins(vassalImage) {
-  CC.getEntries()
-  .then(function (entries) {
-    // log the title for all the entries that have it
-    entries.items.forEach(function (entry) {
-      if (allowedContentType.indexOf(entry.sys.contentType.sys.id) > -1) {
-        let data = entry.fields
-        let name = data.name
-        let description = data.description
-        let lat = data.lat
-        let lng = data.lng
-        let owner
-        if (data.owner !== undefined) {
-          owner = new Owner(data.owner.fields.name, 'https:' + data.owner.fields.blason.fields.file.url)
-        }
-        let pin7
-        let pin6
-        if (entry.sys.contentType.sys.id === 'fief') {
-          let type = data.fiefType.fields.name
-          let width = data.fiefType.fields.buildingType.fields.iconWidth
-          let height = data.fiefType.fields.buildingType.fields.iconHeight
-          let iconUrl = 'https:' + data.fiefType.fields.buildingType.fields.icon.fields.file.url
-          let soldats = data.fiefType.fields.soldats
-          let garnison = data.fiefType.fields.garnison
-          let chevaliers = data.fiefType.fields.chevaliers
-          let vassal = data.vassal ? vassalImage : ''
-          pin7 = new Fief(name, description, type, lat, lng, owner, width, height, ratio7, iconUrl, soldats, garnison, chevaliers, vassal)
-          pin6 = new Fief(name, description, type, lat, lng, owner, width, height, ratio6, iconUrl, soldats, garnison, chevaliers, vassal)
-        } else {
-          let type = data.buildingType.fields.name
-          let width = data.buildingType.fields.iconWidth
-          let height = data.buildingType.fields.iconHeight
-          let iconUrl = 'https:' + data.buildingType.fields.icon.fields.file.url
-          pin7 = new Pin(name, description, type, lat, lng, owner, width, height, ratio7, iconUrl)
-          pin6 = new Pin(name, description, type, lat, lng, owner, width, height, ratio6, iconUrl)
-        }
-        zoom7.addLayer(pin7.buildMarker())
-        zoom6.addLayer(pin6.buildMarker())
-      }
-    })
-    map.addLayer(zoom6)
+CC.getEntries()
+.then(function (entries) {
+  // log the title for all the entries that have it
+  entries.items.forEach(function (entry) {
+    let contentType = entry.sys.contentType.sys.id
+    if (contentType === 'fief') {
+      let abstractFief = new AbstractFief(entry)
+      let fief7 = new Fief(abstractFief.name, abstractFief.description, abstractFief.type, abstractFief.lat, abstractFief.lng, abstractFief.owner, abstractFief.width, abstractFief.height, ratio7, abstractFief.iconUrl, abstractFief.soldats, abstractFief.garnison, abstractFief.chevaliers, abstractFief.vassal)
+      let fief6 = new Fief(abstractFief.name, abstractFief.description, abstractFief.type, abstractFief.lat, abstractFief.lng, abstractFief.owner, abstractFief.width, abstractFief.height, ratio6, abstractFief.iconUrl, abstractFief.soldats, abstractFief.garnison, abstractFief.chevaliers, abstractFief.vassal)
+      zoom7.addLayer(fief7.buildMarker())
+      zoom6.addLayer(fief6.buildMarker())
+    } else if (contentType === 'building') {
+      let abstractPin = new AbstractPin(entry)
+      let pin7 = new Pin(abstractPin.name, abstractPin.description, abstractPin.type, abstractPin.lat, abstractPin.lng, abstractPin.owner, abstractPin.width, abstractPin.height, ratio7, abstractPin.iconUrl)
+      let pin6 = new Pin(abstractPin.name, abstractPin.description, abstractPin.type, abstractPin.lat, abstractPin.lng, abstractPin.owner, abstractPin.width, abstractPin.height, ratio6, abstractPin.iconUrl)
+      zoom7.addLayer(pin7.buildMarker())
+      zoom6.addLayer(pin6.buildMarker())
+    }
   })
-}
+  map.addLayer(zoom6)
+})

@@ -53,7 +53,9 @@ class Fief extends Pin {
     this.soldats = soldats
     this.garnison = garnison
     this.chevaliers = chevaliers
-    this.vassal = vassal
+    if (vassal) {
+      this.vassal = 'img/vassal.png'
+    }
   }
 
   toString () {

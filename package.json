@@ -5,13 +5,15 @@
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
-    "babel-cli": "^6.18.0",
-    "babel-preset-es2015": "^6.18.0",
+    "babel-cli": "^6.23.0",
+    "babel-core": "^6.23.1",
+    "babel-preset-es2015": "^6.22.0",
+    "http-server": "^0.9.0",
     "webpack": "^1.14.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "babel-build": "babel src/figaro.js src/entities.js src/contentful.js src/map.js --out-file index.js"
+    "build": "babel --presets es2015 src -o index.js",
+    "start": "http-server"
   },
   "repository": {
     "type": "git",

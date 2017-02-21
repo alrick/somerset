@@ -1,43 +1,38 @@
-import * as figaro from './figaro'
+import { contentful as figaro } from './figaro'
 import * as entities from './entities'
 import contentful from 'contentful'
 
-class ContentfulAbstract {
+export default class Abstract {
   constructor () {
-    this.fiefs = []
-    this.buildings = []
-
     this.client = contentful.createClient({
-      space: figaro.contentful.space,
-      accessToken: figaro.contentful.accessToken
+      space: figaro.space,
+      accessToken: figaro.accessToken
     })
+    this.mapAssetId = '5IedQC7r2geCO2UOAoug2A'
+  }
 
-    this.client.getEntries()
-    .then(function (entries) {
+  getData (callback) {
+    let fiefs = []
+    let buildings = []
+
+    this.client.getEntries({ include: 2, limit: 1000 }).then(function (entries) {
       entries.items.forEach(function (entry) {
         let contentType = entry.sys.contentType.sys.id
         if (contentType === 'fief') {
-          this.fiefs.push(_buildFief(entry))
+          fiefs.push(_buildFief(entry))
         } else if (contentType === 'building') {
-          this.buildings.push(_buildBuilding(entry))
+          buildings.push(_buildBuilding(entry))
         }
       })
+      callback(buildings, fiefs)
     })
   }
 
-  getBackground () {
-    this.client.getAsset(figaro.contentful.mapId)
-    .then(function (asset) {
-      return 'https:' + asset.fields.file.url
+  getAsset (assetId, callback) {
+    this.client.getAsset(assetId).then(function (asset) {
+      let url = 'https:' + asset.fields.file.url
+      callback(url)
     })
-  }
-
-  getBuildings () {
-    return this.buildings
-  }
-
-  getFiefs () {
-    return this.fiefs
   }
 }
 
@@ -47,7 +42,7 @@ function _buildBuilding (entry, ratio) {
 
   // name, description, type, lat, lng, owner, width, height, iconUrl
   return new entities.Building(data.name, data.description, buildingType.name, data.lat, data.lng,
-    _buildOwner(data.owner), buildingType.iconWidth, buildingType.iconHeight, _buildIconUrl())
+    _buildOwner(data.owner), buildingType.iconWidth, buildingType.iconHeight, _buildIconUrl(buildingType))
 }
 
 function _buildFief (entry, ratio) {
@@ -57,7 +52,8 @@ function _buildFief (entry, ratio) {
 
   // name, description, type, lat, lng, owner, width, height, iconUrl, soldats, garnison, chevaliers, vassal
   return new entities.Fief(data.name, data.description, fiefType.name, data.lat, data.lng,
-    _buildOwner(data.owner), buildingType.iconWidth, buildingType.iconHeight, _buildIconUrl())
+    _buildOwner(data.owner), buildingType.iconWidth, buildingType.iconHeight, _buildIconUrl(buildingType),
+    fiefType.soldats, fiefType.garnison, fiefType.chevaliers, data.vassal)
 }
 
 function _buildOwner (owner) {
@@ -67,5 +63,3 @@ function _buildOwner (owner) {
 function _buildIconUrl (buildingType) {
   return 'https:' + buildingType.icon.fields.file.url
 }
-
-export { ContentfulAbstract as abstract }

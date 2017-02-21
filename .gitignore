@@ -59,4 +59,4 @@ typings/
 
 # App
 build/bundle.js
-src/figaro.js
+src/modules/figaro.js

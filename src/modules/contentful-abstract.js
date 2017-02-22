@@ -8,30 +8,41 @@ export default class Abstract {
       space: figaro.space,
       accessToken: figaro.accessToken
     })
+    this.entities = []
     this.mapAssetId = '5IedQC7r2geCO2UOAoug2A'
   }
 
-  getData (callback) {
-    let fiefs = []
-    let buildings = []
-
-    this.client.getEntries({ include: 2, limit: 1000 }).then(function (entries) {
-      entries.items.forEach(function (entry) {
-        let contentType = entry.sys.contentType.sys.id
-        if (contentType === 'fief') {
-          fiefs.push(_buildFief(entry))
-        } else if (contentType === 'building') {
-          buildings.push(_buildBuilding(entry))
-        }
+  init () {
+    let client = this.client
+    let entities = this.entities
+    return new Promise(function (resolve, reject) {
+      client.getEntries({ include: 2, limit: 1000 }).then(function (entries) {
+        entries.items.forEach(function (entry) {
+          let contentType = entry.sys.contentType.sys.id
+          if (contentType === 'fief') {
+            entities.push(_buildFief(entry))
+          } else if (contentType === 'building') {
+            entities.push(_buildBuilding(entry))
+          }
+        })
+        resolve()
+      }).catch(function (error) {
+        console.log(error)
+        reject()
       })
-      callback(buildings, fiefs)
     })
   }
 
-  getAsset (assetId, callback) {
-    this.client.getAsset(assetId).then(function (asset) {
-      let url = 'https:' + asset.fields.file.url
-      callback(url)
+  getAsset (assetId) {
+    let client = this.client
+    return new Promise(function (resolve, reject) {
+      client.getAsset(assetId).then(function (asset) {
+        let url = 'https:' + asset.fields.file.url
+        resolve(url)
+      }).catch(function (error) {
+        console.log(error)
+        reject()
+      })
     })
   }
 }
